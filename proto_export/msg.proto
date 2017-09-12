@@ -1,0 +1,224 @@
+syntax = "proto3";
+
+//登录
+message cs_loginGame{
+	string deviceid=1;
+	string nick=2;
+}
+message sc_loginGame{
+	int32 userid=1;
+	int32 result=2;
+}
+
+//大厅
+
+//房间管理
+//状态更新
+message userInfo{
+	int32 userid=1;
+	string nick=2;
+	int32 status =3;
+	int32 team=4;
+}
+
+message br_queueStatus{
+	repeated userInfo users=1;
+}
+//开始匹配 1:2v2	2:3v3
+message cs_startMatching{
+	int32 type=1;
+}
+// 0:失败 1：
+message sc_startMatching{
+	int32 result=1;
+}
+message cs_exitMatching{
+}
+//退出匹配
+message sc_exitMatching{
+	int32 result=1;
+}
+
+//准备
+message cs_ready{
+	int32 userid=1;
+}
+message sc_ready{
+	int32 result=1;
+}
+
+message userLoadingInfo{
+	int32 userid=1;
+	int32 progress=2;
+	int32 team=3;
+}
+
+message cs_loading{
+	int32 progress=1;
+}
+
+message br_loading{
+	repeated userLoadingInfo info=1;
+}
+
+//开始游戏
+//玩家信息
+message playerInfo{
+	int32 userid=1;
+	int32 avatarid=2;
+	int32 cartype=3;
+	int32 hp=4;	
+	string nick=5;
+}
+
+//场景内对象更新信息
+message objectInfo{
+	int32 uuid=1;
+	int32 objectid=2;//槽位
+	int32 type=3;//1NPC 2ITEM
+	int32 status=4; // 1 enable 2 working 3 disable
+}
+message br_ObjectUpdate{
+	repeated objectInfo  objinfo=1;
+}
+//游戏开始
+message br_startGame{
+	string roomnum=1;
+	int32 mapid=2;
+	repeated playerInfo team1=3;
+	repeated playerInfo team2=4;
+	repeated objectInfo objinfo=5;
+}
+//物品拾取
+message cs_pickUpItem{
+	int32 uuid=1;
+}
+message sc_pickUpItmeResult{
+	int32 result=1;
+	int32 itemid=2;
+}
+//物品拾取广播消息
+message br_pickUpItem{
+	int32 userid=1;
+	int32 itemid=2;
+}
+
+//物品使用,使用哪个位置的物品
+message cs_useItem{
+	int32 position=1;
+	int32 touserid=2;
+}
+message sc_useItemResult{
+	int32 result=1;
+}
+//物品使用广播消息
+message br_useItem{
+	int32 userid=1;
+	int32 touserid=2;
+	int32 itemid=3;
+	int32 effectid=4;
+}
+
+//接送逻辑
+
+//接
+message cs_pickupNpc{
+	int32 userid=1;
+	int32 npcid=2;
+}
+message sc_pickupNpcResult{
+	int32 result=1;
+}
+message br_pickupNpc{
+	int32 userid=1;
+	int32 npcid=2;
+}
+//送
+message cs_npcArrive{
+	int32 npcid=1;
+	int32 userid=2;
+}
+message sc_npcArriveResult{
+	int32 result=1;
+}
+message br_npcArrive{
+	int32 npcid=1;
+	int32 userid=2;
+}
+
+//撞车
+message cs_crashCar{
+	int32 userid=1;
+	int32 selfdamage=2;
+}
+message sc_crashCarResult{
+	int32 result=1;
+	int32 damage=2;
+	int32 npchide=3;
+}
+//撞车伤害广播
+message br_crashCar{
+	int32 userid=1;
+	int32 damage=2;
+	int32 npchide=3;
+}
+
+
+//车重生消息
+message br_carreborn{
+	int32 userid=1;
+}
+
+//房间内位置同步
+//Vector3
+message mathVector3{
+	float x=1;
+	float y=2;
+	float z=3;
+}
+//车辆位置同步信息
+message posInfo {
+	int32 userid = 1;
+	float h = 2;
+	float v = 3;
+	float handvrake = 4;
+	mathVector3 pos = 5;
+	mathVector3 angle = 6; 
+	mathVector3 velocity = 7;
+}
+message cs_syncPos{
+	posInfo  info=1;
+}
+//不需要包含当前人
+message br_syncPos{
+	repeated posInfo posarray =1;
+}
+message cs_regist{
+	string deviceid=1;
+	string nick=2; 
+}
+message sc_regist{
+	int32 result=1;
+}
+
+//获得比赛记录,接人数，摧毁车辆数，被摧毁数
+message cs_matchInfo{
+}
+message matchInfo{
+	int32 playerid=1;
+	int32 npcArriveCount=2;
+	int32 killCount=3;
+	int32 deadCount=4;
+}
+message br_matchInfo{
+	repeated matchInfo team1=1;
+	repeated matchInfo team2=2;
+}
+
+//比赛结束
+message br_matchResult{
+	int32 team1score=1;
+	int32 team2score=2;
+	repeated matchInfo team1=3;
+	repeated matchInfo team2=4;
+}

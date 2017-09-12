@@ -1,0 +1,1 @@
+python genMessageID.py msg.proto
