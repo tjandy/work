@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<plist>
+  <!--Inner descript ${N} =\n ${L} =< ${R} = '>'-->
+  
+  <descript>//This code create by CodeEngine mrd.cyou.com ,don't modify</descript>
+  
+  <import>
+import java.util.ArrayList;${N}
+import java.util.HashMap;${N}
+import java.util.List;${N}
+import org.slf4j.Logger;${N}
+import org.slf4j.LoggerFactory;${N}
+import cyou.mrd.Platform;${N} 
+import cyou.mrd.service.Service;${N}
+import cyou.mrd.util.ConfigKeys;${N}
+import cyou.mrd.util.Utils;${N}
+  </import>
+  
+  <namespace>package game.table;${N}</namespace>
+  <classhead>
+ public class TableManager implements Service{${N}	
+  private static final Logger log  = LoggerFactory.getLogger( TableManager.class);${N}
+
+${N}
+@Override${N}
+  public String getId() { ${N}
+    return "TableManager";${N}
+  }${N}
+${N}
+  @Override${N}
+  public void startup() throws Exception {${N}
+    if(!TableManager.InitTable())${N}
+    {${N}
+        throw new Exception("init Table Error!!!!!!!!!!!!!"); ${N}
+    }${N}
+  }${N}
+${N}
+  @Override${N}
+  public void shutdown() throws Exception {${N}
+     ${N}
+  }${N}
+  </classhead>
+
+  <!--This below is Body-->
+  <managerdata>
+  public static HashMap${L}Integer,Table_${CodeName}${R}  g_${CodeName} = new HashMap${L}Integer,Table_${CodeName}${R}();${N}
+  </managerdata>
+
+  <initsingle>
+     if (!Table_${CodeName}.loadTable(g_${CodeName})) {${N}
+      log.error("Load Table:" + Table_${CodeName}.TAB_FILE_DATA + "ERROR!!!");${N}
+      return false;${N}
+    } else {${N}
+      log.debug("Load Table:" + Table_${CodeName}.TAB_FILE_DATA + "OK!!!");${N}
+    }${N}
+  </initsingle>
+  
+  <inittable>
+    public  static  boolean InitTable()  throws TableException${N}
+    {${N}    
+    ${FULLINIT}${N}
+    return true;${N}
+    }${N}
+  </inittable>
+
+  <manageropt>
+    public static Table_${CodeName}   Get${CodeName}ByID(int nIdex)${N}
+    {${N}
+            return g_${CodeName}.get(nIdex);${N}
+    }${N}
+
+  </manageropt>
+
+  <tail>${N}}${N}</tail>
+  </plist>
+  
