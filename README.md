@@ -12,3 +12,10 @@ proto_export
 	
    -- 小工具：在proto导出jhava、csharp的同时，顺便生成packetID,方便网络层做消息包映射
 
+excelToCode
+
+   -- 一个读表器生成工具，暂未完成
+
+shell
+
+   -- 狼人杀项目的一些shell脚本
