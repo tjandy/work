@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>压测结果展示</title>  
+    <!-- 引入 echarts.js -->
+    <script src="{{url_for('static',filename = 'echarts.min.js')}}"></script>
+    <script src="{{url_for('static',filename = 'jquery-1.4.2.min.js')}}"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div>在线人数:{{online}}</div>
+    <div id="mem" style="width: 600px;height:400px;"></div>
+    <div id="cpu" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        setTimeout(function(){location.reload()},60000);
+        // 基于准备好的dom，初始化echarts实例
+        var memChart = echarts.init(document.getElementById('mem'));
+        var cpuChart = echarts.init(document.getElementById('cpu'));
+        // 指定图表的配置项和数据
+        var option_mem = {
+            title: {
+                text: 'MEM(KB)'
+            },
+            tooltip: {},
+            legend: {
+                data:['Map','Login','Base','DB','Connenct']
+            },
+            xAxis: {
+                data: [{{timedata|safe}}]
+            },
+            yAxis: {},
+            series: [{
+                name: 'Map',
+                type: 'line',
+                data: [{{mapdata}}]
+            },{
+                name: 'Login',
+                type: 'line',
+                data: [{{logindata}}]
+            },{
+                name: 'Base',
+                type: 'line',
+                data: [{{basedata}}]
+            },{
+                name: 'DB',
+                type: 'line',
+                data: [{{dbdata}}]
+            },{
+                name: 'Connenct',
+                type: 'line',
+                data: [{{connectdata}}]
+            }
+            ]
+        };
+        var option_cpu = {
+            title: {
+                text: 'CPU(%)'
+            },
+            tooltip: {},
+            legend: {
+                data:['Map','Login','Base','DB','Connenct']
+            },
+            xAxis: {
+                data: [{{timedata|safe}}]
+            },
+            yAxis: {},
+            series: [{
+                name: 'Map',
+                type: 'line',
+                data: [{{mapdata_cpu}}]
+            },{
+                name: 'Login',
+                type: 'line',
+                data: [{{logindata_cpu}}]
+            },{
+                name: 'Base',
+                type: 'line',
+                data: [{{basedata_cpu}}]
+            },{
+                name: 'DB',
+                type: 'line',
+                data: [{{dbdata_cpu}}]
+            },{
+                name: 'Connenct',
+                type: 'line',
+                data: [{{connectdata_cpu}}]
+            }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。  
+        memChart.setOption(option_mem);
+        cpuChart.setOption(option_cpu);
+    </script>
+</body>
+</html>
