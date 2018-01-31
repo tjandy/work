@@ -1,10 +1,9 @@
 
--- DefineClass("LuaMonitor")
--- 每一行代码的内存增长次数、大小k
+
 memStat = { }
 currentMem = 0
 -- 是否按行统计，否则只按文件统计
-statLine = true
+statLine = false
 function RecordAlloc(event, lineNo)
     local memInc = collectgarbage("count") - currentMem
     -- 没涨内存就不统计

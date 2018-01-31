@@ -10,12 +10,17 @@ tofile(){
 
 getinfo(){
 
-	pid=`ps aux|grep $1|grep -v grep|awk '{print $2}'`
+	pid=`ps aux|grep -w $1|grep -v grep|awk '{print $2}'`
 	
 	mem=`cat /proc/$pid/status | grep VmRSS | cut -d ':' -f 2|sed 's/[ \t]//g'|sed 's/kB//g'`
 	
 	cpu=`top -b -n 1 -p $pid  2>&1 | awk -v pid=$pid '{if ($1 == pid)print $9}'`
-	 
+	if [-z $mem]; then
+	    mem = 0
+	fi
+	if [-z $cpu]; then
+	    cpu = 0.0
+	fi 
 	tofile "$1	$cpu	$mem"	
 }
 
@@ -32,11 +37,12 @@ online=`echo ${str} |grep  "200 OK" |cut -d ',' -f4| cut -d ' ' -f 1 `
 tofile "date	$TIME"
 tofile "online	$online"
 getinfo mapserver
+getinfo mapserver2
 getinfo loginserver
 getinfo baseserver
 getinfo dbserver
 getinfo connectserver
 
-sleep 1m
+sleep 20s
 
 done
