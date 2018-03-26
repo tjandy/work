@@ -19,3 +19,9 @@ excelToCode
 shell
 
    -- 狼人杀项目的一些shell脚本
+
+moniter
+   -- 一个小监控工具，基于flask，可以图形化输出指定进程的cpu和内存情况
+   
+luaprofiler
+   -- lua5.3版本的内存和cpu分析工具
